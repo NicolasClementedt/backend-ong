@@ -1,24 +1,43 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Produtos } from "../../produto/entities/produtos.entity";
-import { IsNotEmpty } from "class-validator";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { TipoCategoria } from '../../common/enums';
 
-
-@Entity()
+@Entity('categorias')
 export class Categoria {
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
-    @PrimaryGeneratedColumn()
-    id: number;
+  @Column({ type: 'varchar', length: 100, unique: true })
+  nome!: string;
 
-   
-    @IsNotEmpty()
-    @Column({length: 100, nullable:false})
-    nome: string;
+  @Column({
+    type: 'enum',
+    enum: TipoCategoria,
+    default: TipoCategoria.OUTRO,
+  })
+  tipo!: TipoCategoria;
 
-    
-    @IsNotEmpty()
-    @Column({length: 1000, nullable:false})
-    descricao: string;
+  @Column({ type: 'varchar', length: 50, nullable: true })
+  icone!: string;
 
-    @OneToMany(() => Produtos, produtos => produtos.categoria)
-    produtos: Produtos[];
+  @Column({ type: 'text', nullable: true })
+  descricao!: string;
+
+  @Column({ type: 'boolean', default: true })
+  ativa!: boolean;
+
+  @OneToMany(() => SubCategoria, (subCategoria) => subCategoria.categoria)
+  subCategorias: SubCategoria[];
+
+  @CreateDateColumn({ name: 'criado_em' })
+  criadoEm!: Date;
+
+  @UpdateDateColumn({ name: 'atualizado_em' })
+  atualizadoEm!: Date;
 }

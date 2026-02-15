@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Categoria } from './categoria/entities/categoria.entity';
-import { Produtos } from './produto/entities/produtos.entity';
-import { ProdutosModule } from './produto/produtos.module';
 import { CategoriaModule } from './categoria/categoria.module';
-
+import { SubcategoriaModule } from './subcategoria/subcategoria.module';
+import { Subcategoria } from './subcategoria/entities/subcategoria.entity';
 
 @Module({
   imports: [
@@ -15,20 +14,15 @@ import { CategoriaModule } from './categoria/categoria.module';
       username: 'root',
       password: 'admin123',
       database: 'db_estoquecube',
-      entities: [Produtos, Categoria],
+      entities: [Categoria, Subcategoria],
       synchronize: true,
       logging: true,
     }),
-    ProdutosModule,
     CategoriaModule,
-  ], 
-  
-   controllers: [],
-  providers: [],
+    SubcategoriaModule,
+  ],
 
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
-
-
- 
-
