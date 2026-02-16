@@ -7,6 +7,7 @@ import { Subcategoria } from './subcategoria/entities/subcategoria.entity';
 import { ItemModule } from './item/item.module';
 import { EstoqueModule } from './estoque/estoque.module';
 import { MovimentacaoModule } from './movimentacao/movimentacao.module';
+import { ComposicaoCestaModule } from './composicao-cesta/composicao-cesta.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { MovimentacaoModule } from './movimentacao/movimentacao.module';
     ItemModule,
     EstoqueModule,
     MovimentacaoModule,
+    ComposicaoCestaModule,
   ],
 
   controllers: [],
