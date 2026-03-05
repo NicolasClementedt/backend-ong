@@ -1,0 +1,92 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Categoria {
+  ALIMENTO
+  ROUPA
+  HIGIENE
+  BRINQUEDO
+  LIMPEZA
+  OUTRO
+}
+
+enum TipoTransacao {
+  FAMILIA
+  EVENTO
+  PARCEIRO
+  OUTRO
+}
+
+enum CategoriaDestino {
+  FAMILIA
+  EVENTO
+  PARCEIRO
+  OUTRO
+}
+
+enum PerfilUsuario {
+  ADMIN
+  USUARIO
+}
+
+
+model Item {
+  id                String      @id @default(uuid())
+  nome              String
+  categoria         Categoria
+  unidadeMedida     String
+  quantidadeAtual   Float     @default(0)
+  quantidadeMinima  Float
+  criadoEm          DateTime   @default(now())
+  atualizadoEm      DateTime   @updatedAt
+
+  transacoes        Transacao[]
+}
+
+
+
+
+model Transacao {
+
+  id                    String                 @id @default(uuid())
+  tipo                  TipoTransacao
+  quantidade            Float
+  observacao            String?
+  categoriaDestino      CategoriaDestino?
+  descricaoDestino      String?
+  data                  DateTime                @default(now())
+  criadoEm              DateTime                 @default(now())
+
+
+  itemId                String
+  item                   Item                     @relation(fields: [itemId], references: [id])
+
+  usuarioId             String
+  usuario               Usuario                   @relation(fields: [usuarioId], references: [id])
+
+}
+
+
+model Usuario {
+
+  id                String          @id @default(uuid())
+  nome              String
+  email             String          @unique
+  senhaHash         String
+  perfil            PerfilUsuario   @default(USUARIO)
+  criadoEm          DateTime        @default(now())
+
+
+  transacoes  Transacao[]
+}
