@@ -1,5 +1,12 @@
-import { TipoTransacao } from '@prisma/client';
-import { IsEnum, IsOptional, IsString, isString } from 'class-validator';
+import { TipoTransacao } from '.prisma/client';
+import {
+  IsDateString,
+  isDateString,
+  IsEnum,
+  IsOptional,
+  IsString,
+  isString,
+} from 'class-validator';
 
 export class FilterTransactionDto {
   @IsOptional()
@@ -9,4 +16,12 @@ export class FilterTransactionDto {
   @IsOptional()
   @IsEnum(TipoTransacao)
   tipo?: TipoTransacao;
+
+  @IsOptional()
+  @IsDateString()
+  dataInicio?: string;
+
+  @IsOptional()
+  @IsDateString()
+  dataFim?: string;
 }
