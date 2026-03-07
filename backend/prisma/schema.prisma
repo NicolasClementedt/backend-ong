@@ -22,10 +22,8 @@ enum Categoria {
 }
 
 enum TipoTransacao {
-  FAMILIA
-  EVENTO
-  PARCEIRO
-  OUTRO
+  ENTRADA
+  SAIDA
 }
 
 enum CategoriaDestino {
