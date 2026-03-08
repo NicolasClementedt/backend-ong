@@ -6,48 +6,48 @@ export declare class TransactionService {
     constructor(prisma: PrismaService);
     create(dto: CreateTransactionDto): Promise<{
         item: {
+            id: string;
             nome: string;
             categoria: import(".prisma/client").$Enums.Categoria;
             unidadeMedida: string;
-            quantidadeMinima: number;
-            id: string;
             quantidadeAtual: number;
+            quantidadeMinima: number;
             criadoEm: Date;
             atualizadoEm: Date;
         };
     } & {
-        data: Date;
         id: string;
         criadoEm: Date;
-        itemId: string;
         tipo: import(".prisma/client").$Enums.TipoTransacao;
         quantidade: number;
         observacao: string | null;
         categoriaDestino: import(".prisma/client").$Enums.CategoriaDestino | null;
         descricaoDestino: string | null;
+        data: Date;
+        itemId: string;
         usuarioId: string | null;
     }>;
     findAll(filters: FilterTransactionDto): Promise<({
         item: {
+            id: string;
             nome: string;
             categoria: import(".prisma/client").$Enums.Categoria;
             unidadeMedida: string;
-            quantidadeMinima: number;
-            id: string;
             quantidadeAtual: number;
+            quantidadeMinima: number;
             criadoEm: Date;
             atualizadoEm: Date;
         };
     } & {
-        data: Date;
         id: string;
         criadoEm: Date;
-        itemId: string;
         tipo: import(".prisma/client").$Enums.TipoTransacao;
         quantidade: number;
         observacao: string | null;
         categoriaDestino: import(".prisma/client").$Enums.CategoriaDestino | null;
         descricaoDestino: string | null;
+        data: Date;
+        itemId: string;
         usuarioId: string | null;
     })[]>;
 }
