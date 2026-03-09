@@ -76,7 +76,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ItemController.prototype, "remove", null);
 exports.ItemController = ItemController = __decorate([
-    (0, common_1.Controller)('item'),
+    (0, common_1.Controller)('items'),
     __metadata("design:paramtypes", [item_service_1.ItemService])
 ], ItemController);
 //# sourceMappingURL=item.controller.js.map
