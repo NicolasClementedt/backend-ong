@@ -1,7 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import DashboardPage from "./pages/dashboard/DashboardPage";
 import ItemsPage from "./pages/items/ItemsPage";
-import TransactionsPage from "./pages/transactions/TransactionsPage";
+import TransactionsPage from "../src/pages/transaction/TransactionsPage";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import { ToastContainer } from "react-toastify";

@@ -5,7 +5,7 @@ import type {
   Transacao,
 } from "../types";
 
-export const transactionService = {
+export const transactionsService = {
   async getAll(filters?: FilterTransacaoDto): Promise<Transacao[]> {
     const response = await api.get("/transactions", { params: filters });
     return response.data;

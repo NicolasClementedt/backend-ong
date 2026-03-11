@@ -1,4 +1,5 @@
-import type { NivelAlerta } from "../../types";
+// src/components/AlertaBadge/AlertaBadge.tsx
+import { NivelAlerta } from "../../types";
 
 interface Props {
   nivel: NivelAlerta;
@@ -21,9 +22,5 @@ const config = {
 
 export default function AlertaBadge({ nivel }: Props) {
   const { label, classes } = config[nivel];
-  return (
-    <span className={`text-xs font-semibold px-2 py-1 rounded-full ${classes}`}>
-      {label}
-    </span>
-  );
+  return <span className={`  ${classes}`}>{label}</span>;
 }

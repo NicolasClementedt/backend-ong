@@ -62,38 +62,30 @@ export default function ItemForm({
   }
 
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 p-6">
-        <h2 className="text-lg font-bold text-gray-800 mb-5">
-          {itemParaEditar ? "Editar Item" : "Novo Item"}
-        </h2>
+    <div>
+      <div>
+        <h2>{itemParaEditar ? "Editar Item" : "Novo Item"}</h2>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           {/* Nome */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Nome
-            </label>
+            <label>Nome</label>
             <input
               name="nome"
               value={form.nome}
               onChange={handleChange}
               required
               placeholder="Ex: Arroz, Feijão..."
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
           {/* Categoria */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Categoria
-            </label>
+            <label>Categoria</label>
             <select
               name="categoria"
               value={form.categoria}
               onChange={handleChange}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               {categorias.map((cat) => (
                 <option key={cat.value} value={cat.value}>
@@ -105,14 +97,11 @@ export default function ItemForm({
 
           {/* Unidade de medida */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Unidade de Medida
-            </label>
+            <label>Unidade de Medida</label>
             <select
               name="unidadeMedida"
               value={form.unidadeMedida}
               onChange={handleChange}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               {unidades.map((un) => (
                 <option key={un} value={un}>
@@ -124,9 +113,7 @@ export default function ItemForm({
 
           {/* Quantidade mínima */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Quantidade Mínima
-            </label>
+            <label>Quantidade Mínima</label>
             <input
               name="quantidadeMinima"
               type="number"
@@ -134,23 +121,15 @@ export default function ItemForm({
               value={form.quantidadeMinima}
               onChange={handleChange}
               required
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
           {/* Botões */}
-          <div className="flex gap-3 pt-2">
-            <button
-              type="button"
-              onClick={onCancel}
-              className="flex-1 py-2 text-sm font-medium text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-            >
+          <div>
+            <button type="button" onClick={onCancel}>
               Cancelar
             </button>
-            <button
-              type="submit"
-              className="flex-1 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
-            >
+            <button type="submit">
               {itemParaEditar ? "Salvar" : "Cadastrar"}
             </button>
           </div>

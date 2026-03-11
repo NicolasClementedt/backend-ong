@@ -18,33 +18,31 @@ export default function ItemCard({
   onMovimentacao,
 }: Props) {
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 flex flex-col gap-3">
+    <div>
       {/* Header */}
-      <div className="flex items-start justify-between">
+      <div>
         <div>
-          <h3 className="font-semibold text-gray-800 text-base">{item.nome}</h3>
-          <span className="text-xs text-gray-400">{item.categoria}</span>
+          <h3>{item.nome}</h3>
+          <span>{item.categoria}</span>
         </div>
         <AlertaBadge nivel={item.nivelAlerta} />
       </div>
 
       {/* Quantidade */}
-      <div className="flex items-end gap-1">
-        <span className="text-3xl font-bold text-gray-800">
-          {item.quantidadeAtual}
-        </span>
-        <span className="text-sm text-gray-400 mb-1">{item.unidadeMedida}</span>
+      <div>
+        <span>{item.quantidadeAtual}</span>
+        <span>{item.unidadeMedida}</span>
       </div>
 
       {/* Barra de progresso */}
       <div>
-        <div className="flex justify-between text-xs text-gray-400 mb-1">
+        <div>
           <span>Estoque atual</span>
           <span>
             Mínimo: {item.quantidadeMinima} {item.unidadeMedida}
           </span>
         </div>
-        <div className="w-full bg-gray-100 rounded-full h-2">
+        <div>
           <div
             className={`h-2 rounded-full transition-all ${
               item.nivelAlerta === "VERDE"

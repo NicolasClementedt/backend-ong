@@ -1,12 +1,13 @@
 // src/pages/items/ItemsPage.tsx
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { Categoria, type Item } from "../../types";
+import { Categoria, type Item, type CreateTransacaoDto } from "../../types";
 import { itemsService } from "../../services/items.service";
-
+import { transactionsService } from "../../services/transactions.service";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import ItemCard from "../../components/Item/ItemCard";
 import ItemForm from "../../components/Item/ItemForm";
+import TransactionForm from "../../components/transactions/TransactionForm";
 
 const categorias = [
   { value: "", label: "Todas" },
@@ -24,6 +25,10 @@ export default function ItemsPage() {
   const [filtroCategoria, setFiltroCategoria] = useState("");
   const [modalAberto, setModalAberto] = useState(false);
   const [itemParaEditar, setItemParaEditar] = useState<Item | null>(null);
+  const [itemParaMovimentacao, setItemParaMovimentacao] = useState<Item | null>(
+    null,
+  );
+  const [modalMovimentacaoAberto, setModalMovimentacaoAberto] = useState(false);
 
   async function carregarItens() {
     try {
@@ -58,6 +63,19 @@ export default function ItemsPage() {
     }
   }
 
+  async function handleMovimentacao(dto: CreateTransacaoDto) {
+    try {
+      await transactionsService.create(dto);
+      toast.success("Movimentação registrada com sucesso!");
+      setModalMovimentacaoAberto(false);
+      setItemParaMovimentacao(null);
+      carregarItens();
+    } catch (error: any) {
+      const mensagem = error?.response?.data?.message;
+      toast.error(mensagem || "Erro ao registrar movimentação");
+    }
+  }
+
   async function handleDelete(id: string) {
     if (!confirm("Tem certeza que deseja excluir este item?")) return;
     try {
@@ -80,21 +98,14 @@ export default function ItemsPage() {
   }
 
   return (
-    <div className="flex flex-col gap-6">
+    <div>
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div>
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">Estoque</h1>
-          <p className="text-sm text-gray-400">
-            {itens.length} itens cadastrados
-          </p>
+          <h1>Estoque</h1>
+          <p>{itens.length} itens cadastrados</p>
         </div>
-        <button
-          onClick={handleNovoItem}
-          className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
-        >
-          + Novo Item
-        </button>
+        <button onClick={handleNovoItem}>+ Novo Item</button>
       </div>
 
       {/* Filtros */}
@@ -118,25 +129,28 @@ export default function ItemsPage() {
       {loading ? (
         <LoadingSpinner />
       ) : itens.length === 0 ? (
-        <div className="text-center py-16 text-gray-400">
-          <p className="text-4xl mb-3">📦</p>
-          <p className="text-sm">Nenhum item encontrado</p>
+        <div>
+          <p>📦</p>
+          <p>Nenhum item encontrado</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div>
           {itens.map((item) => (
             <ItemCard
               key={item.id}
               item={item}
               onEdit={handleEdit}
               onDelete={handleDelete}
-              onMovimentacao={() => {}}
+              onMovimentacao={(item) => {
+                setItemParaMovimentacao(item);
+                setModalMovimentacaoAberto(true);
+              }}
             />
           ))}
         </div>
       )}
 
-      {/* Modal */}
+      {/* Modal cadastro/edição */}
       {modalAberto && (
         <ItemForm
           itemParaEditar={itemParaEditar}
@@ -144,6 +158,18 @@ export default function ItemsPage() {
           onCancel={() => {
             setModalAberto(false);
             setItemParaEditar(null);
+          }}
+        />
+      )}
+
+      {/* Modal movimentação */}
+      {modalMovimentacaoAberto && (
+        <TransactionForm
+          itemPreSelecionado={itemParaMovimentacao}
+          onSubmit={handleMovimentacao}
+          onCancel={() => {
+            setModalMovimentacaoAberto(false);
+            setItemParaMovimentacao(null);
           }}
         />
       )}
