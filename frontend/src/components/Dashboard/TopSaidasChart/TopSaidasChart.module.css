@@ -1,0 +1,79 @@
+.card {
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-gray-200);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-6);
+}
+
+.title {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--color-gray-800);
+  margin-bottom: var(--spacing-5);
+}
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.posicao {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: var(--color-gray-400);
+  width: 16px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.info {
+  flex: 1;
+}
+
+.infoHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-1);
+}
+
+.nome {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-gray-800);
+}
+
+.total {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-gray-800);
+}
+
+.barraWrapper {
+  width: 100%;
+  background-color: var(--color-gray-100);
+  border-radius: var(--radius-full);
+  height: 8px;
+}
+
+.barra {
+  height: 8px;
+  background-color: var(--color-primary);
+  border-radius: var(--radius-full);
+  transition: var(--transition);
+}
+
+.empty {
+  text-align: center;
+  padding: var(--spacing-8);
+  color: var(--color-gray-400);
+  font-size: var(--font-size-sm);
+}

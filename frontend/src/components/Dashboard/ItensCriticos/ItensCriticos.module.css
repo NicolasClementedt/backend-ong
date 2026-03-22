@@ -1,0 +1,99 @@
+.card {
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-gray-200);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-6);
+}
+
+.title {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--color-gray-800);
+  margin-bottom: var(--spacing-5);
+}
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3);
+  border-radius: var(--radius-md);
+  background-color: var(--color-gray-50);
+}
+
+.indicador {
+  width: 4px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.indicadorVermelho {
+  background-color: var(--color-danger);
+}
+
+.indicadorAmarelo {
+  background-color: var(--color-warning);
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+}
+
+.nome {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-gray-800);
+}
+
+.quantidade {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray-400);
+  margin-top: 2px;
+}
+
+.percentualWrapper {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.percentual {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+}
+
+.percentualVermelho {
+  color: var(--color-danger);
+}
+
+.percentualAmarelo {
+  color: var(--color-warning);
+}
+
+.percentualLabel {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray-400);
+}
+
+.empty {
+  text-align: center;
+  padding: var(--spacing-8);
+}
+
+.emptyIcon {
+  font-size: 2rem;
+  margin-bottom: var(--spacing-2);
+}
+
+.emptyText {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-400);
+}

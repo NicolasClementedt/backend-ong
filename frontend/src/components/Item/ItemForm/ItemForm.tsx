@@ -1,6 +1,6 @@
-// src/pages/items/components/ItemForm.tsx
 import { useState, useEffect } from "react";
-import { Categoria, type CreateItemDto, type Item } from "../../types";
+import { type CreateItemDto, type Item, Categoria } from "../../../types";
+import styles from "./ItemForm.module.css";
 
 interface Props {
   itemParaEditar?: Item | null;
@@ -50,7 +50,7 @@ export default function ItemForm({
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) {
     const { name, value } = e.target;
-    setForm((prev: any) => ({
+    setForm((prev) => ({
       ...prev,
       [name]: name === "quantidadeMinima" ? Number(value) : value,
     }));
@@ -62,30 +62,32 @@ export default function ItemForm({
   }
 
   return (
-    <div>
-      <div>
-        <h2>{itemParaEditar ? "Editar Item" : "Novo Item"}</h2>
+    <div className={styles.overlay}>
+      <div className={styles.modal}>
+        <h2 className={styles.title}>
+          {itemParaEditar ? "Editar Item" : "Novo Item"}
+        </h2>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          {/* Nome */}
-          <div>
-            <label>Nome</label>
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <div className={styles.field}>
+            <label className={styles.label}>Nome</label>
             <input
               name="nome"
               value={form.nome}
               onChange={handleChange}
               required
               placeholder="Ex: Arroz, Feijão..."
+              className={styles.input}
             />
           </div>
 
-          {/* Categoria */}
-          <div>
-            <label>Categoria</label>
+          <div className={styles.field}>
+            <label className={styles.label}>Categoria</label>
             <select
               name="categoria"
               value={form.categoria}
               onChange={handleChange}
+              className={styles.select}
             >
               {categorias.map((cat) => (
                 <option key={cat.value} value={cat.value}>
@@ -95,13 +97,13 @@ export default function ItemForm({
             </select>
           </div>
 
-          {/* Unidade de medida */}
-          <div>
-            <label>Unidade de Medida</label>
+          <div className={styles.field}>
+            <label className={styles.label}>Unidade de Medida</label>
             <select
               name="unidadeMedida"
               value={form.unidadeMedida}
               onChange={handleChange}
+              className={styles.select}
             >
               {unidades.map((un) => (
                 <option key={un} value={un}>
@@ -111,9 +113,8 @@ export default function ItemForm({
             </select>
           </div>
 
-          {/* Quantidade mínima */}
-          <div>
-            <label>Quantidade Mínima</label>
+          <div className={styles.field}>
+            <label className={styles.label}>Quantidade Mínima</label>
             <input
               name="quantidadeMinima"
               type="number"
@@ -121,15 +122,19 @@ export default function ItemForm({
               value={form.quantidadeMinima}
               onChange={handleChange}
               required
+              className={styles.input}
             />
           </div>
 
-          {/* Botões */}
-          <div>
-            <button type="button" onClick={onCancel}>
+          <div className={styles.botoes}>
+            <button
+              type="button"
+              onClick={onCancel}
+              className={styles.btnCancelar}
+            >
               Cancelar
             </button>
-            <button type="submit">
+            <button type="submit" className={styles.btnSalvar}>
               {itemParaEditar ? "Salvar" : "Cadastrar"}
             </button>
           </div>

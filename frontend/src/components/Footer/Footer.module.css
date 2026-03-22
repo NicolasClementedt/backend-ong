@@ -1,0 +1,11 @@
+.footer {
+  background-color: var(--color-primary);
+  padding: var(--spacing-4) var(--spacing-6);
+  margin-top: auto;
+}
+
+.text {
+  text-align: center;
+  font-size: var(--font-size-xs);
+  color: rgba(255, 255, 255, 0.7);
+}

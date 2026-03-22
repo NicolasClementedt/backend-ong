@@ -1,12 +1,12 @@
-// src/pages/transactions/components/TransactionForm.tsx
 import { useState, useEffect } from "react";
 import {
   type CreateTransacaoDto,
   type Item,
   TipoTransacao,
   CategoriaDestino,
-} from "../../types/index";
-import { itemsService } from "../../services/items.service";
+} from "../../../types";
+import { itemsService } from "../../../services/items.service";
+import styles from "./TransactionForm.module.css";
 
 interface Props {
   itemPreSelecionado?: Item | null;
@@ -72,21 +72,22 @@ export default function TransactionForm({
   const isSaida = form.tipo === TipoTransacao.SAIDA;
 
   return (
-    <div>
-      <div>
-        <h2>Nova Movimentação</h2>
+    <div className={styles.overlay}>
+      <div className={styles.modal}>
+        <h2 className={styles.title}>Nova Movimentação</h2>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          {/* Item */}
-          <div>
-            <label>Item</label>
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <div className={styles.field}>
+            <label className={styles.label}>Item</label>
             <select
               name="itemId"
               value={form.itemId}
               onChange={handleChange}
               required
               disabled={!!itemPreSelecionado}
+              className={styles.select}
             >
+              <option value="">Selecione um item</option>
               {itens.map((item) => (
                 <option key={item.id} value={item.id}>
                   {item.nome} ({item.quantidadeAtual} {item.unidadeMedida})
@@ -95,19 +96,16 @@ export default function TransactionForm({
             </select>
           </div>
 
-          {/* Tipo */}
-          <div>
-            <label>Tipo</label>
-            <div className="flex gap-3">
+          <div className={styles.field}>
+            <label className={styles.label}>Tipo</label>
+            <div className={styles.tipoWrapper}>
               <button
                 type="button"
                 onClick={() =>
                   setForm((prev) => ({ ...prev, tipo: TipoTransacao.ENTRADA }))
                 }
-                className={`flex-1 py-2 text-sm font-medium rounded-lg border transition-colors ${
-                  form.tipo === TipoTransacao.ENTRADA
-                    ? "bg-green-500 text-white border-green-500"
-                    : "text-gray-600 border-gray-200 hover:bg-gray-50"
+                className={`${styles.btnTipo} ${styles.btnTipoEntrada} ${
+                  form.tipo === TipoTransacao.ENTRADA ? styles.ativo : ""
                 }`}
               >
                 ↓ Entrada
@@ -117,10 +115,8 @@ export default function TransactionForm({
                 onClick={() =>
                   setForm((prev) => ({ ...prev, tipo: TipoTransacao.SAIDA }))
                 }
-                className={`flex-1 py-2 text-sm font-medium rounded-lg border transition-colors ${
-                  form.tipo === TipoTransacao.SAIDA
-                    ? "bg-red-500 text-white border-red-500"
-                    : "text-gray-600 border-gray-200 hover:bg-gray-50"
+                className={`${styles.btnTipo} ${styles.btnTipoSaida} ${
+                  form.tipo === TipoTransacao.SAIDA ? styles.ativo : ""
                 }`}
               >
                 ↑ Saída
@@ -128,9 +124,8 @@ export default function TransactionForm({
             </div>
           </div>
 
-          {/* Quantidade */}
-          <div>
-            <label>Quantidade</label>
+          <div className={styles.field}>
+            <label className={styles.label}>Quantidade</label>
             <input
               name="quantidade"
               type="number"
@@ -138,19 +133,20 @@ export default function TransactionForm({
               value={form.quantidade}
               onChange={handleChange}
               required
+              className={styles.input}
             />
           </div>
 
-          {/* Campos de saída */}
           {isSaida && (
             <>
-              <div>
-                <label>Categoria do Destino</label>
+              <div className={styles.field}>
+                <label className={styles.label}>Categoria do Destino</label>
                 <select
                   name="categoriaDestino"
                   value={form.categoriaDestino ?? ""}
                   onChange={handleChange}
                   required
+                  className={styles.select}
                 >
                   <option value="">Selecione</option>
                   {categoriasDestino.map((cat) => (
@@ -161,36 +157,42 @@ export default function TransactionForm({
                 </select>
               </div>
 
-              <div>
-                <label>Descrição do Destino</label>
+              <div className={styles.field}>
+                <label className={styles.label}>Descrição do Destino</label>
                 <input
                   name="descricaoDestino"
                   value={form.descricaoDestino ?? ""}
                   onChange={handleChange}
                   placeholder="Ex: Família Silva, Evento de Natal..."
+                  className={styles.input}
                 />
               </div>
             </>
           )}
 
-          {/* Observação */}
-          <div>
-            <label>Observação</label>
+          <div className={styles.field}>
+            <label className={styles.label}>Observação</label>
             <textarea
               name="observacao"
               value={form.observacao ?? ""}
               onChange={handleChange}
               rows={2}
               placeholder="Opcional..."
+              className={styles.textarea}
             />
           </div>
 
-          {/* Botões */}
-          <div>
-            <button type="button" onClick={onCancel}>
+          <div className={styles.botoes}>
+            <button
+              type="button"
+              onClick={onCancel}
+              className={styles.btnCancelar}
+            >
               Cancelar
             </button>
-            <button type="submit">Registrar</button>
+            <button type="submit" className={styles.btnRegistrar}>
+              Registrar
+            </button>
           </div>
         </form>
       </div>

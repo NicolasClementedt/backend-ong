@@ -1,5 +1,5 @@
 // src/pages/dashboard/components/TopSaidasChart.tsx
-import { type TopSaida } from "../../types/index";
+import { type TopSaida } from "../../../types/index";
 
 interface Props {
   topSaidas: TopSaida[];

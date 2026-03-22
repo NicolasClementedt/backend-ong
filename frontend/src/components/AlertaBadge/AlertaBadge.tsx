@@ -1,26 +1,17 @@
-// src/components/AlertaBadge/AlertaBadge.tsx
 import { NivelAlerta } from "../../types";
+import styles from "./AlertaBadge.module.css";
 
 interface Props {
   nivel: NivelAlerta;
 }
 
 const config = {
-  VERDE: {
-    label: "Normal",
-    classes: "bg-green-100 text-green-700 border border-green-300",
-  },
-  AMARELO: {
-    label: "Baixo",
-    classes: "bg-yellow-100 text-yellow-700 border border-yellow-300",
-  },
-  VERMELHO: {
-    label: "Urgente",
-    classes: "bg-red-100 text-red-700 border border-red-300",
-  },
+  VERDE: { label: "Normal", classe: styles.verde },
+  AMARELO: { label: "Baixo", classe: styles.amarelo },
+  VERMELHO: { label: "Urgente", classe: styles.vermelho },
 };
 
 export default function AlertaBadge({ nivel }: Props) {
-  const { label, classes } = config[nivel];
-  return <span className={`  ${classes}`}>{label}</span>;
+  const { label, classe } = config[nivel];
+  return <span className={`${styles.badge} ${classe}`}>{label}</span>;
 }

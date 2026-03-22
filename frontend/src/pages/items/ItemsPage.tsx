@@ -1,13 +1,13 @@
-// src/pages/items/ItemsPage.tsx
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { Categoria, type Item, type CreateTransacaoDto } from "../../types";
 import { itemsService } from "../../services/items.service";
 import { transactionsService } from "../../services/transactions.service";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
-import ItemCard from "../../components/Item/ItemCard";
-import ItemForm from "../../components/Item/ItemForm";
-import TransactionForm from "../../components/transactions/TransactionForm";
+import styles from "./ItemPage.module.css";
+import ItemForm from "../../components/Item/ItemForm/ItemForm";
+import ItemCard from "../../components/Item/ItemCard/ItemCard";
+import TransactionForm from "../../components/Transactions/TransactionForm/TransactionForm";
 
 const categorias = [
   { value: "", label: "Todas" },
@@ -87,59 +87,53 @@ export default function ItemsPage() {
     }
   }
 
-  function handleEdit(item: Item) {
-    setItemParaEditar(item);
-    setModalAberto(true);
-  }
-
-  function handleNovoItem() {
-    setItemParaEditar(null);
-    setModalAberto(true);
-  }
-
   return (
-    <div>
-      {/* Header */}
-      <div>
-        <div>
+    <div className={styles.page}>
+      <div className={styles.header}>
+        <div className={styles.headerTexts}>
           <h1>Estoque</h1>
           <p>{itens.length} itens cadastrados</p>
         </div>
-        <button onClick={handleNovoItem}>+ Novo Item</button>
+        <button
+          className={styles.btnNovo}
+          onClick={() => {
+            setItemParaEditar(null);
+            setModalAberto(true);
+          }}
+        >
+          + Novo Item
+        </button>
       </div>
 
-      {/* Filtros */}
-      <div className="flex gap-2 flex-wrap">
+      <div className={styles.filtros}>
         {categorias.map((cat) => (
           <button
             key={cat.value}
             onClick={() => setFiltroCategoria(cat.value)}
-            className={`text-xs font-medium px-3 py-1.5 rounded-full border transition-colors ${
-              filtroCategoria === cat.value
-                ? "bg-blue-600 text-white border-blue-600"
-                : "text-gray-600 border-gray-200 hover:bg-gray-50"
-            }`}
+            className={`${styles.filtroBotao} ${filtroCategoria === cat.value ? styles.filtroAtivo : ""}`}
           >
             {cat.label}
           </button>
         ))}
       </div>
 
-      {/* Lista */}
       {loading ? (
         <LoadingSpinner />
       ) : itens.length === 0 ? (
-        <div>
-          <p>📦</p>
-          <p>Nenhum item encontrado</p>
+        <div className={styles.empty}>
+          <p className={styles.emptyIcon}>📦</p>
+          <p className={styles.emptyText}>Nenhum item encontrado</p>
         </div>
       ) : (
-        <div>
+        <div className={styles.grid}>
           {itens.map((item) => (
             <ItemCard
               key={item.id}
               item={item}
-              onEdit={handleEdit}
+              onEdit={(item) => {
+                setItemParaEditar(item);
+                setModalAberto(true);
+              }}
               onDelete={handleDelete}
               onMovimentacao={(item) => {
                 setItemParaMovimentacao(item);
@@ -150,7 +144,6 @@ export default function ItemsPage() {
         </div>
       )}
 
-      {/* Modal cadastro/edição */}
       {modalAberto && (
         <ItemForm
           itemParaEditar={itemParaEditar}
@@ -162,7 +155,6 @@ export default function ItemsPage() {
         />
       )}
 
-      {/* Modal movimentação */}
       {modalMovimentacaoAberto && (
         <TransactionForm
           itemPreSelecionado={itemParaMovimentacao}

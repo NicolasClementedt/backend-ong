@@ -1,12 +1,12 @@
-// src/pages/dashboard/DashboardPage.tsx
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { dashboardService } from "../../services/dashboard.service";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
+import styles from "./DashboardPage.module.css";
+import ItensCriticos from "../../components/Dashboard/ItensCriticos/ItensCriticos";
 import type { Dashboard } from "../../types";
-import AlertaCard from "../../components/Dashboard/AlertaCard";
-import TopSaidasChart from "../../components/Dashboard/TopSaidasChart";
-import ItensCriticos from "../../components/Dashboard/ItensCriticos";
+import TopSaidasChart from "../../components/Dashboard/TopSaidasChart/TopSaidasChart";
+import AlertaCard from "../../components/Dashboard/AlertaCard/AlertaCard";
 
 export default function DashboardPage() {
   const [dashboard, setDashboard] = useState<Dashboard | null>(null);
@@ -32,21 +32,20 @@ export default function DashboardPage() {
   if (!dashboard) return null;
 
   return (
-    <div>
-      {/* Header */}
-      <div>
-        <div>
+    <div className={styles.page}>
+      <div className={styles.header}>
+        <div className={styles.headerTexts}>
           <h1>Dashboard</h1>
           <p>Visão geral do estoque</p>
         </div>
-        <button onClick={carregarDashboard}>↻ Atualizar</button>
+        <button className={styles.refreshButton} onClick={carregarDashboard}>
+          ↻ Atualizar
+        </button>
       </div>
 
-      {/* Cards de alerta */}
       <AlertaCard resumo={dashboard.resumoAlertas} />
 
-      {/* Top saídas e itens críticos */}
-      <div>
+      <div className={styles.grid}>
         <TopSaidasChart topSaidas={dashboard.topSaidas} />
         <ItensCriticos itensCriticos={dashboard.itensCriticos} />
       </div>

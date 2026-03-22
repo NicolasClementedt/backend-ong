@@ -1,0 +1,87 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-4);
+}
+
+.card {
+  border-radius: var(--radius-lg);
+  border: 1px solid transparent;
+  padding: var(--spacing-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.label {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+}
+
+.emoji {
+  font-size: 1.5rem;
+}
+
+.valor {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.descricao {
+  font-size: var(--font-size-xs);
+}
+
+.verde {
+  background-color: var(--color-success-light);
+  border-color: var(--color-success-border);
+}
+
+.verde .label,
+.verde .descricao {
+  color: var(--color-success);
+}
+
+.verde .valor {
+  color: var(--color-success);
+}
+
+.amarelo {
+  background-color: var(--color-warning-light);
+  border-color: var(--color-warning-border);
+}
+
+.amarelo .label,
+.amarelo .descricao {
+  color: var(--color-warning);
+}
+
+.amarelo .valor {
+  color: var(--color-warning);
+}
+
+.vermelho {
+  background-color: var(--color-danger-light);
+  border-color: var(--color-danger-border);
+}
+
+.vermelho .label,
+.vermelho .descricao {
+  color: var(--color-danger);
+}
+
+.vermelho .valor {
+  color: var(--color-danger);
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

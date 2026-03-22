@@ -1,11 +1,12 @@
-// src/pages/transactions/TransactionsPage.tsx
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { type Transacao, TipoTransacao } from "../../types";
 import { transactionsService } from "../../services/transactions.service";
-import TransactionForm from "../../components/transactions/TransactionForm";
-import TransactionHistory from "../../components/transactions/TransactionHistory";
+
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
+import styles from "./TransactionsPage.module.css";
+import TransactionHistory from "../../components/Transactions/TransactionHistory/TransactionHistory";
+import TransactionForm from "../../components/Transactions/TransactionForm/TransactionForm";
 
 export default function TransactionsPage() {
   const [transacoes, setTransacoes] = useState<Transacao[]>([]);
@@ -44,20 +45,18 @@ export default function TransactionsPage() {
   }
 
   return (
-    <div>
-      {/* Header */}
-      <div>
-        <div>
+    <div className={styles.page}>
+      <div className={styles.header}>
+        <div className={styles.headerTexts}>
           <h1>Movimentações</h1>
           <p>{transacoes.length} registros</p>
         </div>
-        <button onClick={() => setModalAberto(true)}>
+        <button className={styles.btnNovo} onClick={() => setModalAberto(true)}>
           + Nova Movimentação
         </button>
       </div>
 
-      {/* Filtros */}
-      <div className="flex gap-2">
+      <div className={styles.filtros}>
         {[
           { value: "", label: "Todas" },
           { value: TipoTransacao.ENTRADA, label: "↓ Entradas" },
@@ -66,10 +65,8 @@ export default function TransactionsPage() {
           <button
             key={filtro.value}
             onClick={() => setFiltroTipo(filtro.value)}
-            className={`text-xs font-medium px-3 py-1.5 rounded-full border transition-colors ${
-              filtroTipo === filtro.value
-                ? "bg-blue-600 text-white border-blue-600"
-                : "text-gray-600 border-gray-200 hover:bg-gray-50"
+            className={`${styles.filtroBotao} ${
+              filtroTipo === filtro.value ? styles.filtroAtivo : ""
             }`}
           >
             {filtro.label}
@@ -77,14 +74,12 @@ export default function TransactionsPage() {
         ))}
       </div>
 
-      {/* Histórico */}
       {loading ? (
         <LoadingSpinner />
       ) : (
         <TransactionHistory transacoes={transacoes} />
       )}
 
-      {/* Modal */}
       {modalAberto && (
         <TransactionForm
           onSubmit={handleSubmit}
