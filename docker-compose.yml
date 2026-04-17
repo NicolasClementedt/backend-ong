@@ -1,0 +1,65 @@
+version: '3.9'
+
+services:
+  # ─── Banco de dados ───────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: app_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-appdb}
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-postgres}']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # ─── Backend (NestJS + Prisma) ────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: app_backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-appdb}
+      NODE_ENV: ${NODE_ENV:-development}
+      PORT: 3000
+    ports:
+      - '3000:3000'
+    volumes:
+      # Monta o código-fonte para hot reload
+      - ./backend:/app
+      # Preserva o node_modules do container (não sobrescreve com o da máquina host)
+      - /app/node_modules
+    command: sh -c "npx prisma migrate deploy && npm run start:dev"
+
+  # ─── Frontend (React + Vite) ──────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: app_frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      VITE_API_URL: ${VITE_API_URL:-http://localhost:3000}
+    ports:
+      - '5173:5173'
+    volumes:
+      # Monta o código-fonte para HMR
+      - ./frontend:/app
+      - /app/node_modules
+
+volumes:
+  postgres_data:
