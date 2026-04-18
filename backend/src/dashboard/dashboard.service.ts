@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../src/prisma/prisma.service';
-import { NivelAlerta } from '../src/common/enums/enums';
+import { PrismaService } from '../prisma/prisma.service';
+import { NivelAlerta } from '../common/enums/enums';
 import { TipoTransacao } from '@prisma/client';
 
 @Injectable()
